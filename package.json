@@ -55,7 +55,8 @@
     "@jupyterlab/notebook": "^3.0.7",
     "@jupyterlab/services": "^6.0.5",
     "@jupyterlab/settingregistry": "^3.0.5",
-    "@lumino/commands": "^1.12.0"
+    "@lumino/commands": "^1.12.0",
+    "@lumino/signaling": "^1.4.3"
   },
   "devDependencies": {
     "@jupyterlab/builder": "^3.0.0",

@@ -33,6 +33,57 @@ import {
   PartialJSONValue, ReadonlyPartialJSONValue
 } from '@lumino/coreutils';
 
+import { Signal } from "@lumino/signaling";
+
+import {
+  IObservableList,
+  IObservableUndoableList,
+  IObservableString
+} from "@jupyterlab/observables";
+
+class CellWrapper {
+
+  private _cell: Cell<ICellModel>;
+
+  constructor({ cell }: { cell: Cell<ICellModel> }) {
+    this.dispose = this.dispose.bind(this);
+    this.onCellMetadataChanged = this.onCellMetadataChanged.bind(this);
+    this.update = this.update.bind(this);
+    this._cell = cell;
+
+    cell.model.metadata.changed.connect(this.onCellMetadataChanged, this);
+    cell.disposed.connect(this.dispose, this);
+
+    setTimeout(this.update, 0);
+  }
+
+  dispose() {
+    Signal.disconnectAll(this);
+  }
+
+  update() {
+    if (this._cell?.model?.metadata.has(PLUGIN_ID)) {
+
+      let metadata = this._cell.model.metadata.get(PLUGIN_ID) as { style?: any };
+
+      if (metadata["style"] !== null && typeof metadata["style"] == "object") {
+
+        Object.assign(this._cell.node.style, metadata["style"]);
+      }
+    }
+  }
+
+  onCellMetadataChanged(sender: IObservableJSON, args: IObservableMap.IChangedArgs<ReadonlyPartialJSONValue | undefined>) {
+    if (args.key == PLUGIN_ID) {
+      let style = (args.newValue as { style?: any })["style"];
+
+      if (style !== null && typeof style == "object") {
+        Object.assign(this._cell.node.style, style);
+      }
+    }
+  }
+}
+
 const PLUGIN_ID = "@educational-technology-collective/etc_jupyterlab_cell_properties:plugin"
 
 /**
@@ -53,52 +104,39 @@ const plugin: JupyterFrontEndPlugin<void> = {
     settingRegistry: ISettingRegistry | null
   ) => {
     console.log('JupyterLab extension @educational-technology-collective/etc_jupyterlab_cell_properties is activated!');
-
-    // if (settingRegistry) {
-    //   settingRegistry
-    //     .load(plugin.id)
-    //     .then(settings => {
-    //       console.log('@educational-technology-collective/etc_jupyterlab_cell_properties settings loaded:', settings.composite);
-    //     })
-    //     .catch(reason => {    notebookTracker.widgetAdded.connect(async (sender: INotebookTracker, notebookPanel: NotebookPanel) => {
-
+    
     notebookTracker.widgetAdded.connect(async (sender: INotebookTracker, notebookPanel: NotebookPanel) => {
 
       await notebookPanel.revealed;
 
       notebookPanel.content.widgets.forEach((cell: Cell<ICellModel>) => {
 
-        cell.model.metadata.changed.connect((
-          sender: IObservableJSON,
-          args: IObservableMap.IChangedArgs<ReadonlyPartialJSONValue | undefined>
+        new CellWrapper({ cell });
+      });
+
+      notebookPanel.content.model?.cells.changed.connect(
+        (
+          sender: IObservableUndoableList<ICellModel>,
+          args: IObservableList.IChangedArgs<ICellModel>
         ) => {
 
-          if (args.key === PLUGIN_ID) {
+          if (args.type == "add" || args.type == "set") {
 
-            let style = (args.newValue as any)["style"];
+            args.newValues.forEach((model: ICellModel) => {
 
-            Object.assign(cell.node.style, style);
+              let cell = notebookPanel.content.widgets.find((cell: Cell<ICellModel>) => cell.model == model);
+
+              if (cell) {
+
+                new CellWrapper({ cell });
+              }
+            });
+          }
+          else {
 
           }
         });
-      });
     });
-
-    //       console.error('Failed to load settings for @educational-technology-collective/etc_jupyterlab_cell_properties.', reason);
-    //     });
-    // }
-
-    // requestAPI<any>('get_example')
-    //   .then(data => {
-    //     console.log(data);
-    //   })
-    //   .catch(reason => {
-    //     console.error(
-    //       `The etc_jupyterlab_cell_properties server extension appears to be missing.\n${reason}`
-    //     );
-    //   });
-
-
   }
 };
 

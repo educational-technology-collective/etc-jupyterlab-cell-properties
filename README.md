@@ -1,14 +1,29 @@
-# etc_jupyterlab_cell_properties
+# ETC JupyterLab Cell Properties
 
-![Github Actions Status](git@github.com:educational-technology-collective/etc_jupyterlab_cell_properties.git/workflows/Build/badge.svg)[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/git@github.com:educational-technology-collective/etc_jupyterlab_cell_properties.git/main?urlpath=lab)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/educational-technology-collective/etc_jupyterlab_cell_properties/main?urlpath=lab)
 
-A JupyterLab extension.
+## Description 
 
+This extension allows for CSS styling to be added to cell metadata.
 
-This extension is composed of a Python package named `etc_jupyterlab_cell_properties`
-for the server extension and a NPM package named `@educational-technology-collective/etc_jupyterlab_cell_properties`
-for the frontend extension.
+## Usage
 
+Click on a cell in a Notebook.  Open the Property Inspector in the Right Panel.  Add a property to the Cell Metadata object named "@educational-technology-collective/etc_jupyterlab_cell_properties:plugin" with a value that contains a property named "style".  Assigned an object to the "style" property that contains CSS.  The CSS styling will be applied to the respective cell.
+
+### Example
+
+```json
+{
+    "@educational-technology-collective/etc_jupyterlab_cell_properties:plugin": {
+        "style": {
+            "background": "#FFCB05",
+            "border": "solid #00274B 10px"
+        },
+        "tags": []
+    },
+    "tags": []
+}
+```
 
 ## Requirements
 
@@ -16,12 +31,53 @@ for the frontend extension.
 
 ## Install
 
-To install the extension, execute:
+To install the extension:
+
+Install the Python build package (https://pypi.org/project/build/).
 
 ```bash
-pip install etc_jupyterlab_cell_properties
+pip install build
 ```
 
+Clone to repository.
+
+```bash
+git clone https://github.com/educational-technology-collective/etc_jupyterlab_cell_properties.git
+```
+
+or,
+
+```bash
+git clone git@github.com:educational-technology-collective/etc_jupyterlab_cell_properties.git
+```
+
+Change the directory into the repository.
+
+```bash
+cd etc_jupyterlab_cell_properties
+```
+
+**The following instructions assume that your current working directory is the base directory of the repository.**
+
+Next build the extension according to the instructions given in the [documentation](https://jupyterlab.readthedocs.io/en/stable/extension/extension_tutorial.html#packaging-your-extension).  The instructions are summarized below:
+
+Create a wheel (.whl) package in the `dist` directory.
+
+```bash
+python -m build
+```
+
+Install the wheel package; this will install the extension.
+
+```bash
+pip install ./dist/etc_jupyterlab_cell_properties-*-py3-none-any.whl
+```
+
+Start Jupyter Lab.
+
+```bash
+jupyter lab
+```
 ## Uninstall
 
 To remove the extension, execute:
@@ -29,7 +85,6 @@ To remove the extension, execute:
 ```bash
 pip uninstall etc_jupyterlab_cell_properties
 ```
-
 
 ## Troubleshoot
 
@@ -46,6 +101,10 @@ the frontend extension, check the frontend extension is installed:
 ```bash
 jupyter labextension list
 ```
+
+## Usage
+
+
 
 
 ## Contributing
