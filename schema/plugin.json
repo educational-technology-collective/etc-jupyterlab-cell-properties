@@ -1,0 +1,8 @@
+{
+  "jupyter.lab.shortcuts": [],
+  "title": "@educational-technology-collective/etc_jupyterlab_cell_properties",
+  "description": "@educational-technology-collective/etc_jupyterlab_cell_properties settings.",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": false
+}
