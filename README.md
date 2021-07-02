@@ -4,11 +4,11 @@
 
 ## Description 
 
-This extension allows for CSS styling to be added to cell metadata.
+This extension allows for CSS styling to be added to cell metadata.  The specified styling will style the respective cell.
 
 ## Usage
 
-Click on a cell in a Notebook.  Open the Property Inspector in the Right Panel.  Add a property to the Cell Metadata object named "@educational-technology-collective/etc_jupyterlab_cell_properties:plugin" with a value that contains a property named "style".  Assigned an object to the "style" property that contains CSS.  The CSS styling will be applied to the respective cell.
+In order to add styling to a cell:  Click on a cell in a Notebook.  Open the Property Inspector in the Right Panel.  Add a property to the Cell Metadata object named `@educational-technology-collective/etc_jupyterlab_cell_properties:plugin` with a value that contains a property named `style`.  Assign an object to the `style` property that contains [JavaScript CSS Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Properties_Reference).  The CSS styling will be applied to the respective cell.
 
 ### Example
 
