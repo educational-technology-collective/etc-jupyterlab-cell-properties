@@ -1,6 +1,6 @@
 {
   "name": "@educational-technology-collective/etc_jupyterlab_cell_properties",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A JupyterLab extension.",
   "keywords": [
     "jupyter",
