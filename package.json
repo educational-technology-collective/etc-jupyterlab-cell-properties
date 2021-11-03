@@ -7,9 +7,9 @@
     "jupyterlab",
     "jupyterlab-extension"
   ],
-  "homepage": "git@github.com:educational-technology-collective/etc_jupyterlab_cell_properties.git",
+  "homepage": "https://github.com/educational-technology-collective/etc_jupyterlab_cell_properties.git",
   "bugs": {
-    "url": "git@github.com:educational-technology-collective/etc_jupyterlab_cell_properties.git/issues"
+    "url": "https://github.com/educational-technology-collective/etc_jupyterlab_cell_properties.git/issues"
   },
   "license": "BSD-3-Clause",
   "author": {
@@ -26,7 +26,7 @@
   "style": "style/index.css",
   "repository": {
     "type": "git",
-    "url": "git@github.com:educational-technology-collective/etc_jupyterlab_cell_properties.git.git"
+    "url": "https://github.com/educational-technology-collective/etc_jupyterlab_cell_properties.git"
   },
   "scripts": {
     "build": "jlpm run build:lib && jlpm run build:labextension:dev",
